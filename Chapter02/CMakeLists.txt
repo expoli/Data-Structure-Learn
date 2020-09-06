@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
-project(test)
+PROJECT(Chapter02)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(test main.cpp SqList/SqList.h SqList/SqList.cpp LinkList/LinkList.cpp LinkList/LinkList.h)
+add_executable(${PROJECT_NAME} main.cpp SqList/SqList.cpp SqList/SqList.h DLinkList/DLinkList.cpp DLinkList/DLinkList.h LinkList/LinkList.cpp LinkList/LinkList.h)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME})
