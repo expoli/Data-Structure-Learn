@@ -94,6 +94,26 @@ namespace linklist {
         }
     }
 
+    bool GetElem_Bottom_K(LinkList *L, int k, ElemType &e) {
+        LinkList *p, *q;
+        p = q = L->next;
+        int i = 0;
+        while (p != NULL && i < k) {
+            p = p->next;
+            i++;
+        }
+        if (p == NULL)
+            return false;
+        else {
+            while (p != NULL) {
+                p = p->next;
+                q = q->next;
+            }
+            e = q->data;
+            return true;
+        }
+    }
+
 //
     int LocateElem(LinkList *L, ElemType e) {
         LinkList *p;
