@@ -82,7 +82,7 @@ namespace sqlist {
         return true;
     }
 
-// 顺序表插入
+// 有序表插入
     void ListInsert(SqList *&L, ElemType e) {
         int i = 0, j;
         while (i < L->length && L->data[i] < e)
@@ -93,7 +93,7 @@ namespace sqlist {
         L->length++;
     }
 
-// 顺序表二路归并
+// 有序表二路归并
     void UnionList(SqList *LA, SqList *LB, SqList *&LC) {
         LC = (SqList *) malloc(sizeof(SqList));
         int i = 0, j = 0, k = 0;
