@@ -13,7 +13,15 @@ namespace dlinklist {
         struct Dnode *next;
     } DLinkList;
 
+    void CreateListF(DLinkList *&L, ElemType a[], int n);
 
+    void CreateListR(DLinkList *&L, ElemType a[], int n);
+
+    bool ListInsert(DLinkList *&L, int i, ElemType e);
+
+    bool ListDelete(DLinkList *&L, int i, ElemType &e);
+
+    void Reverse(DLinkList *&L);
 }
 
 #endif //TEST_DLINKLIST_H

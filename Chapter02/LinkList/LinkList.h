@@ -5,9 +5,8 @@
 #ifndef TEST_LINKLIST_H
 #define TEST_LINKLIST_H
 
-#define ElemType int
-
 namespace linklist {
+#define ElemType int
     typedef struct LNode {
         ElemType data;
         struct LNode *next;
@@ -32,6 +31,8 @@ namespace linklist {
     bool ListInsret(LinkList *&L, int i, ElemType e);
 
     bool ListDelete(LinkList *&L, int i, ElemType &e);
+
+    bool GetElem_Bottom_K(LinkList *L, int k, ElemType &e);
 }
 
 #endif //TEST_LINKLIST_H

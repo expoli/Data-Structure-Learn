@@ -5,11 +5,9 @@
 #ifndef TEST_SQLIST_H
 #define TEST_SQLIST_H
 
+namespace sqlist {
 #define ElemType int
 #define MAXSIZE 30
-
-namespace sqlist {
-
     typedef struct SqList {
         int data[MAXSIZE];
         int length;
