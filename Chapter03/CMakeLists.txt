@@ -8,4 +8,4 @@ include_directories(SqStack)
 add_executable(Chapter03
         SqStack/SqStack.cpp
         SqStack/SqStack.h
-        main.cpp LinkStack/LinkStack.h LinkStack/LinkStack.cpp)
+        main.cpp LinkStack/LinkStack.h LinkStack/LinkStack.cpp SqQueue/SqQueue.h SqQueue/SqQueue.cpp LinkQueue/LinkQueue.h LinkQueue/LinkQueue.cpp)
