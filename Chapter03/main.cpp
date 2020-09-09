@@ -54,14 +54,56 @@ bool Match(char exp[], int n) {
     return match;
 }
 
-int main() {
-    char a[10] = {'a', 'b', 'c', 'b', 'a'};
-    sqstack::SqStack *stack;
-    sqstack::InitStack(stack);
-    std::cout << symmetry(a);
+// 双栈模拟队列
+bool EnQueue(sqstack::SqStack *&S1, sqstack::SqStack *&S2, ElemType x) {
+    ElemType temp;
+    if (!sqstack::StackOverflow(S1)) {
+        sqstack::Push(S1, x);
+        return true;
+    }
+    if (sqstack::StackOverflow(S1) && !sqstack::StackEmpty(S2))
+        return false;
+    if (sqstack::StackOverflow(S1) && sqstack::StackEmpty(S2)) {
+        while (sqstack::StackEmpty(S1)) {
+            sqstack::Pop(S1, temp);
+            sqstack::Push(S2, temp);
+        }
+    }
+    sqstack::Push(S1, x);
+    return true;
+}
 
-    char b[10] = "())()()()";
-    std::cout << Match(b, 8);
-    char c[10] = "((()))";
-    std::cout << Match(c, 6);
+bool DeQueue(sqstack::SqStack *&S1, sqstack::SqStack *&S2, ElemType &x) {
+    ElemType temp;
+    if (!sqstack::StackEmpty(S2)) {
+        sqstack::Pop(S2, x);
+        return true;
+    }
+    if (sqstack::StackEmpty(S1))
+        return false;
+    if (sqstack::StackEmpty(S2) && !sqstack::StackEmpty(S1)) {
+        while (!sqstack::StackEmpty(S1) && !sqstack::StackOverflow(S2)) {
+            sqstack::Pop(S1, temp);
+            sqstack::Push(S2, temp);
+        }
+    }
+    sqstack::Pop(S2, x);
+    return true;
+}
+
+int main() {
+    char a[] = "abcdefg";
+    char temp;
+    sqstack::SqStack *stack1;
+    sqstack::InitStack(stack1);
+    sqstack::SqStack *stack2;
+    sqstack::InitStack(stack2);
+
+    for (int i = 0; a[i] != '\0'; i++) {
+        EnQueue(stack1, stack2, a[i]);
+    }
+    for (int i = 0; i < 7; i++) {
+        DeQueue(stack1, stack2, temp);
+        std::cout << temp;
+    }
 }

@@ -40,4 +40,8 @@ namespace sqstack {
         e = s->data[s->top];
         return true;
     }
+
+    bool StackOverflow(SqStack *s) {
+        return s->top == MAXSIZE - 1;
+    }
 }
