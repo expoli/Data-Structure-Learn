@@ -8,11 +8,11 @@
 #define MAXSIZE 30
 
 namespace btree {
-    void CreateBTNode(BTNode *&b, char *str) {
+    void CreateBTNode(BTNode *&b, const char *str) {
         BTNode *St[MAXSIZE], *p;
         int top = -1, k, j = 0;
         char ch;
-        b = NULL;
+        b = nullptr;
         ch = str[j];
         while (ch != '\0') {
             switch (ch) {
@@ -30,8 +30,8 @@ namespace btree {
                 default:
                     p = (BTNode *) malloc(sizeof(BTNode));
                     p->data = ch;
-                    p->lchild = p->rchild = NULL;
-                    if (b == NULL)
+                    p->lchild = p->rchild = nullptr;
+                    if (b == nullptr)
                         b = p;
                     else {
                         switch (k) {
@@ -49,7 +49,7 @@ namespace btree {
     }
 
     void DestroyBT(BTNode *&btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         else {
             DestroyBT(btNode->lchild);
@@ -60,14 +60,14 @@ namespace btree {
 
     BTNode *FindNode(BTNode *btNode, ElemType x) {
         BTNode *p;
-        if (btNode == NULL)
-            return NULL;
+        if (btNode == nullptr)
+            return nullptr;
         else {
             if (btNode->data == x)
                 return btNode;
             else {
                 p = FindNode(btNode->lchild, x);
-                if (p != NULL)
+                if (p != nullptr)
                     return p;
                 else
                     return FindNode(btNode->rchild, x);
@@ -85,7 +85,7 @@ namespace btree {
 
     int BTNodeDepth(BTNode *btNode) {
         int lchilddep, rchilddep;
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return 0;
         else {
             lchilddep = BTNodeDepth(btNode->lchild);
@@ -94,15 +94,83 @@ namespace btree {
         }
     }
 
+    int BtDepth(BTNode *btNode) {
+        if (btNode == nullptr)
+            return 0;
+        int front = -1, rear = -1, last = 0, level = 0;
+        BTNode *qu[MAXSIZE], *p;
+        qu[++rear] = btNode;
+        while (rear != front) {
+            p = qu[++front];
+            if (p->lchild != nullptr)
+                qu[++rear] = p->lchild;
+            if (p->rchild != nullptr)
+                qu[++rear] = p->rchild;
+            if (front == last) {
+                level++;
+                last = rear;
+            }
+        }
+        return level;
+    }
+
+    int BtWidth(BTNode *btNode) {
+        if (btNode == nullptr)
+            return 0;
+        int front = -1, rear = -1, width = 0, last = 0, max = 0;
+        BTNode *qu[MAXSIZE], *p;
+        qu[++rear] = btNode;
+        while (front != rear) {
+            p = qu[++front];
+            if (p->lchild != nullptr) {
+                qu[++rear] = p->lchild;
+                width++;
+            }
+            if (p->rchild != nullptr) {
+                qu[++rear] = p->rchild;
+                width++;
+            }
+            if (front == last) {
+                if (width > max)
+                    max = width;
+                width = 0;
+                last = rear;
+            }
+        }
+        return max;
+    }
+
+    bool IsComplete(BTNode *btNode) {
+        if (btNode == nullptr)
+            return true;
+        BTNode *Qu[MAXSIZE], *p;
+        int front = -1, rear = -1;
+        Qu[++rear] = btNode;
+        while (front < rear) {
+            p = Qu[++front];
+            if (p != nullptr) {
+                Qu[++rear] = p->lchild;
+                Qu[++rear] = p->rchild;
+            } else {
+                while (front < rear) {
+                    p = Qu[++front];
+                    if (p != nullptr)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
     void DispBTNode(BTNode *btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         else {
             std::cout << btNode->data;
-            if (btNode->lchild != NULL || btNode->rchild != NULL) {
+            if (btNode->lchild != nullptr || btNode->rchild != nullptr) {
                 std::cout << '(';
                 DispBTNode(btNode->lchild);
-                if (btNode->rchild != NULL)
+                if (btNode->rchild != nullptr)
                     std::cout << ',';
                 DispBTNode(btNode->rchild);
                 std::cout << ')';
@@ -113,7 +181,7 @@ namespace btree {
     // 二叉树的遍历
     // 先序遍历
     void PreOrder(BTNode *btNode) {
-        if (btNode != NULL) {
+        if (btNode != nullptr) {
             std::cout << btNode->data;
             PreOrder(btNode->lchild);
             PreOrder(btNode->rchild);
@@ -122,7 +190,7 @@ namespace btree {
 
     // 后序遍历
     void PostOrder(BTNode *btNode) {
-        if (btNode != NULL) {
+        if (btNode != nullptr) {
             PostOrder(btNode->lchild);
             PostOrder(btNode->rchild);
             std::cout << btNode->data;
@@ -131,7 +199,7 @@ namespace btree {
 
     // 中序遍历
     void InOrder(BTNode *btNode) {
-        if (btNode != NULL) {
+        if (btNode != nullptr) {
             InOrder(btNode->lchild);
             std::cout << btNode->data;
             InOrder(btNode->rchild);
@@ -145,7 +213,7 @@ namespace btree {
         BTNode *qu[MAXSIZE];
         int front, rear;
         front = rear = 0;
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         rear = (rear + 1) % MAXSIZE;
         qu[rear] = btNode;
@@ -153,11 +221,11 @@ namespace btree {
             front++;
             p = qu[front];
             std::cout << p->data;
-            if (p->lchild != NULL) {
+            if (p->lchild != nullptr) {
                 rear = (rear + 1) % MAXSIZE;
                 qu[rear] = p->lchild;
             }
-            if (p->rchild != NULL) {
+            if (p->rchild != nullptr) {
                 rear = (rear + 1) % MAXSIZE;
                 qu[rear] = p->rchild;
             }
@@ -165,23 +233,24 @@ namespace btree {
     }
 
     int Nodes(BTNode *btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return 0;
         else
             return Nodes(btNode->lchild) + Nodes(btNode->rchild) + 1;
     }
 
     int LeafNodes(BTNode *btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return 0;
-        else if (btNode->rchild == NULL && btNode->lchild == NULL) {
+        else if (btNode->rchild == nullptr && btNode->lchild == nullptr)
             return LeafNodes(btNode->lchild) + LeafNodes(btNode->rchild) + 1;
-        }
+        else
+            return LeafNodes(btNode->lchild) + LeafNodes(btNode->rchild);
     }
 
     void Copy(BTNode *btNode, BTNode *&t) {
-        if (btNode == NULL)
-            t = NULL;
+        if (btNode == nullptr)
+            t = nullptr;
         else {
             t = (BTNode *) malloc(sizeof(BTNode));
             t->data = btNode->data;
@@ -191,8 +260,8 @@ namespace btree {
     }
 
     void Swap(BTNode *btNode, BTNode *&t) {
-        if (btNode == NULL)
-            t = NULL;
+        if (btNode == nullptr)
+            t = nullptr;
         else {
             t = (BTNode *) malloc(sizeof(BTNode));
             t->data = btNode->data;
@@ -203,7 +272,7 @@ namespace btree {
 
     int Level(BTNode *btNode, ElemType x, int h) {
         int l = 0;
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return 0;
         else if (btNode->data == x)
             return h;
@@ -217,7 +286,7 @@ namespace btree {
     }
 
     void AllPath(BTNode *btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         struct snode {
             BTNode *node;
@@ -233,19 +302,20 @@ namespace btree {
         while (front != rear) {
             front++;
             q = qu[front].node;
-            if (q->rchild == NULL && q->lchild == NULL) {
+            if (q->rchild == nullptr && q->lchild == nullptr) {
                 p = front;
                 while (qu[p].parent != -1) {
                     std::cout << qu[p].node->data;
                     p = qu[p].parent;
                 }
+                std::cout << " "; //格式化一下输出
             }
-            if (q->lchild != NULL) {
+            if (q->lchild != nullptr) {
                 rear++;
                 qu[rear].node = q->lchild;
                 qu[rear].parent = front;
             }
-            if (q->rchild != NULL) {
+            if (q->rchild != nullptr) {
                 rear++;
                 qu[rear].node = q->rchild;
                 qu[rear].parent = front;
@@ -258,7 +328,7 @@ namespace btree {
         char *p;
         int k;
         if (n <= 0)
-            return NULL;
+            return nullptr;
         s = (BTNode *) malloc(sizeof(BTNode));
         s->data = *pre;
         for (p = in; p < in + n; p++)
@@ -268,6 +338,7 @@ namespace btree {
         k = p - in;
         s->lchild = CreateBT1(pre + 1, in, k);
         s->rchild = CreateBT1(pre + k + 1, p + 1, n - k - 1);
+        return s;
     }
 
     BTNode *CreateBT2(char *post, char *in, int n) {
@@ -275,7 +346,7 @@ namespace btree {
         char r, *p;
         int k;
         if (n <= 0)
-            return NULL;
+            return nullptr;
         r = *(post + n - 1);
         b = (BTNode *) malloc(sizeof(BTNode));
         b->data = r;
@@ -285,19 +356,21 @@ namespace btree {
         k = p - in;
         b->lchild = CreateBT2(post, in, k);
         b->rchild = CreateBT2(post, p + 1, n - k - 1);
+        return b;
     }
 
+    // 计算双节点数
     int dnodes(BTNode *btNode) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return 0;
-        if (btNode->lchild == NULL && btNode->rchild == NULL)
+        if (btNode->lchild != nullptr && btNode->rchild != nullptr)
             return 1 + dnodes(btNode->lchild) + dnodes(btNode->rchild);
         else
             return dnodes(btNode->lchild) + dnodes(btNode->rchild);
     }
 
     void KLevelNumber(BTNode *btNode, int h, int k, int *&n) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         else {
             if (h == k)
@@ -310,7 +383,7 @@ namespace btree {
     }
 
     void levelnumber(BTNode *btNode, int h, int a[]) {
-        if (btNode == NULL)
+        if (btNode == nullptr)
             return;
         else {
             a[h]++;
@@ -343,7 +416,7 @@ namespace btree {
         int front, rear, lnum;
         front = rear = 0;
 
-        if (b != NULL) {
+        if (b != nullptr) {
             rear++;
             Qu[rear].p = b;
             Qu[rear].lno = 1;
@@ -351,12 +424,12 @@ namespace btree {
                 front++;
                 b = Qu[front].p;
                 lnum = Qu[front].lno;
-                if (b->lchild != NULL) {
+                if (b->lchild != nullptr) {
                     rear++;
                     Qu[rear].p = b->lchild;
                     Qu[rear].lno = lnum + 1;
                 }
-                if (b->rchild != NULL) {
+                if (b->rchild != nullptr) {
                     rear++;
                     Qu[rear].p = b->rchild;
                     Qu[rear].lno = lnum;
