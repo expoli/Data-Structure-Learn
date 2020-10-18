@@ -9,15 +9,15 @@
 
 namespace linkqueue {
     // 数据节点
-    typedef struct qnode {
+    typedef struct linknode {
         ElemType data;
-        struct qnode *next;
-    } QNode;
+        struct linknode *next;
+    } LinkNode;
 
     // 头节点
     typedef struct {
-        QNode *front;
-        QNode *rear;
+        LinkNode *front;
+        LinkNode *rear;
     } LiQueue;
 }
 
