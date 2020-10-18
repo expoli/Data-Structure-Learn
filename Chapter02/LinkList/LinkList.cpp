@@ -77,7 +77,7 @@ namespace linklist {
         std::cout << std::endl;
     }
 
-//
+    // 获取结点I的值
     bool GetElem(LinkList *L, int i, ElemType &e) {
         LinkList *p;
         p = L->next;
@@ -94,6 +94,7 @@ namespace linklist {
         }
     }
 
+    // 获取倒数第K个结点的值
     bool GetElem_Bottom_K(LinkList *L, int k, ElemType &e) {
         LinkList *p, *q;
         p = q = L->next;
