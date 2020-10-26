@@ -206,6 +206,59 @@ namespace btree {
         }
     }
 
+    void PreOrder2(BTNode *btNode) {
+        int top = -1;
+        BTNode *p = btNode, *Stack[MAXSIZE];
+        while (p != nullptr || top != -1) {
+            if (p != nullptr) {
+                std::cout << p->data;
+                Stack[++top] = p;
+                p = p->lchild;
+            } else {
+                p = Stack[top--];
+                p = p->rchild;
+            }
+        }
+    }
+
+    void PostOrder2(BTNode *btNode) {
+        int top = -1;
+        BTNode *p = btNode, *r = nullptr, *Stack[MAXSIZE];
+        while (p != nullptr || top != -1) {
+            if (p != nullptr) {
+                Stack[++top] = p;
+                p = p->lchild;
+            } else {
+                p = Stack[top];
+                if (p->rchild != nullptr && p->rchild != r) {
+                    p = p->rchild;
+                    Stack[++top] = p;
+                    p = p->lchild;
+                } else {
+                    p = Stack[top--];
+                    std::cout << p->data;
+                    r = p;
+                    p = nullptr;
+                }
+            }
+        }
+    }
+
+    void InOrder2(BTNode *btNode) {
+        int top = -1;
+        BTNode *p = btNode, *Stack[MAXSIZE];
+        while (p != nullptr || top != -1) {
+            if (p != nullptr) {
+                Stack[++top] = p;
+                p = p->lchild;
+            } else {
+                p = Stack[top--];
+                std::cout << p->data;
+                p = p->rchild;
+            }
+        }
+    }
+
     // 层次遍历
     void LevelOrder(BTNode *btNode) {
         // 定义一个环形队列

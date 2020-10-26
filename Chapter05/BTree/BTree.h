@@ -37,6 +37,12 @@ namespace btree {
 
     void InOrder(BTNode *btNode);
 
+    void PreOrder2(BTNode *btNode);
+
+    void PostOrder2(BTNode *btNode);
+
+    void InOrder2(BTNode *btNode);
+
     void LevelOrder(BTNode *btNode);
 
     int Nodes(BTNode *btNode);

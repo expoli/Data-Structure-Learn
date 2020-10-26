@@ -3,6 +3,7 @@
 //
 
 #include "BTree/BTree.h"
+#include "ThreadBTree/TBTree.h"
 #include "iostream"
 
 ElemType KValue(btree::BTNode *btNode, int k) {
@@ -97,8 +98,8 @@ void SearchXParent1(btree::BTNode *btNode, ElemType x) {
             }
             return;
         }
-        while (top != 1` && s[top].tag == 1)
-        top--;
+        while (top != 1 && s[top].tag == 1)
+            top--;
     }
 }
 
@@ -147,12 +148,24 @@ int main(void) {
     btree::PreOrder(Tree1);
     std::cout << std::endl;
 
+    std::cout << "PreOrder2:\t";
+    btree::PreOrder2(Tree1);
+    std::cout << std::endl;
+
     std::cout << "InOrder:\t";
     btree::InOrder(Tree1);
     std::cout << std::endl;
 
+    std::cout << "InOrder2:\t";
+    btree::InOrder2(Tree1);
+    std::cout << std::endl;
+
     std::cout << "PostOrder:\t";
     btree::PostOrder(Tree1);
+    std::cout << std::endl;
+
+    std::cout << "PostOrder2:\t";
+    btree::PostOrder2(Tree1);
     std::cout << std::endl;
 
     std::cout << "Swap" << std::endl;
