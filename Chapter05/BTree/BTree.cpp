@@ -94,6 +94,7 @@ namespace btree {
         }
     }
 
+    // 求二叉树的高度的非递归算法
     int BtDepth(BTNode *btNode) {
         if (btNode == nullptr)
             return 0;
@@ -112,6 +113,17 @@ namespace btree {
             }
         }
         return level;
+    }
+
+    int BtDepth2(BiTree *biTree) {
+        if (biTree == nullptr)
+            return 0;
+        int ldep = BtDepth2(biTree->lchild);
+        int rdep = BtDepth2(biTree->rchild);
+        if (ldep > rdep)
+            return ldep + 1;
+        else
+            return rdep + 1;
     }
 
     int BtWidth(BTNode *btNode) {
@@ -312,14 +324,24 @@ namespace btree {
         }
     }
 
-    void Swap(BTNode *btNode, BTNode *&t) {
+    void Swap(BiTree *btNode, BiTree *&t) {
         if (btNode == nullptr)
             t = nullptr;
         else {
-            t = (BTNode *) malloc(sizeof(BTNode));
+            t = (BiTree *) malloc(sizeof(BiTree));
             t->data = btNode->data;
             Swap(btNode->lchild, t->rchild);
             Swap(btNode->rchild, t->lchild);
+        }
+    }
+
+    void Swap(BiTree *&biTree){
+        if (biTree!= nullptr){
+            Swap(biTree->lchild);
+            Swap(biTree->rchild);
+            BiTree *temp = biTree->lchild;
+            biTree->lchild=biTree->rchild;
+            biTree->rchild=temp;
         }
     }
 
@@ -376,7 +398,7 @@ namespace btree {
         }
     }
 
-    BTNode *CreateBT1(char *pre, char *in, int n) {
+    BTNode *PreInCreat(char *pre, char *in, int n) {
         BTNode *s;
         char *p;
         int k;
@@ -389,12 +411,29 @@ namespace btree {
                 break;
 
         k = p - in;
-        s->lchild = CreateBT1(pre + 1, in, k);
-        s->rchild = CreateBT1(pre + k + 1, p + 1, n - k - 1);
+        s->lchild = PreInCreat(pre + 1, in, k);
+        s->rchild = PreInCreat(pre + k + 1, p + 1, n - k - 1);
         return s;
     }
 
-    BTNode *CreateBT2(char *post, char *in, int n) {
+    BiTree *PreInCreat(ElemType pre[], ElemType in[], int l1, int h1, int l2, int h2) {
+        auto *root = (BTNode *) malloc(sizeof(BTNode));
+        int i = 0;
+        root->data = *pre;
+        for (i = l2; in[i] != *pre; i++);
+        int llen = i - l2;
+        int rlen = h2 - i;
+        if (llen)
+            root->lchild = PreInCreat(pre, in, l1 + 1, l1 + llen, l2, l2 + llen - 1);
+        else
+            root->lchild = nullptr;
+        if (rlen)
+            root->rchild = PreInCreat(pre, in, h1 - rlen + 1, h1, h2 - rlen + 1, h2);
+        else
+            root->rchild = nullptr;
+    }
+
+    BTNode *PostInCreat(char *post, char *in, int n) {
         BTNode *b;
         char r, *p;
         int k;
@@ -407,9 +446,26 @@ namespace btree {
             if (*p == r)
                 break;
         k = p - in;
-        b->lchild = CreateBT2(post, in, k);
-        b->rchild = CreateBT2(post, p + 1, n - k - 1);
+        b->lchild = PostInCreat(post, in, k);
+        b->rchild = PostInCreat(post, p + 1, n - k - 1);
         return b;
+    }
+
+    BTNode *PostInCreat(ElemType post[], ElemType in[], int l1, int h1, int l2, int h2) {
+        auto *root = (BTNode *) malloc(sizeof(BTNode));
+        int i = 0;
+        root->data = post[h1 - 1];
+        for (i = l2; in[i] != root->data; i++);
+        int llen = i - l2;
+        int rlen = h2 - i;
+        if (llen)
+            root->lchild = PostInCreat(post, in, l1, l1 + llen - 1, l2, l2 + llen - 1);
+        else
+            root->lchild = nullptr;
+        if (rlen)
+            root->rchild = PostInCreat(post, in, h1 - rlen, h1 - 1, h2 - rlen + 1, h2);
+        else
+            root->rchild = nullptr;
     }
 
     // 计算双节点数

@@ -7,61 +7,106 @@
 
 namespace graph {
 
-    void DFS(ALGraph *G, int v, int visited[]) {
-        ArcNode *p;
-        int w;
-        visited[v] = 1;
-        std::cout << v;
-        p = G->adjlist[v].firstarc;
-        while (p != nullptr) {
-            w = p->adjvex;
-            if (visited[w] == 0)
-                DFS(G, w, visited);
-            p = p->nextarc;
+    void DFSTraverse(ALGraph *alGraph) {
+        int visited[MaxVertexNum];
+        for (int i = 0; i < alGraph->vexnum; ++i) {
+            visited[i] = 0;
+        }
+        for (int i = 0; i < alGraph->vexnum; ++i) {
+            if (!visited[i])
+                DFS(alGraph, i, visited);
         }
     }
 
-    void BFS(ALGraph *G, int v) {
+    void DFS(ALGraph *Graph, int v, int visited[]) {// 与先序遍历类似
+        ArcNode *p;                                 // 临时弧结点
+        int w;                                      // 临时顶点
+        visited[v] = 1;                             // 标记数组
+        std::cout << v;                             // 访问顶点
+        p = Graph->adjlist[v].firstarc;             // 查找与该顶点相连的弧
+        while (p != nullptr) {                      // 当弧存在时
+            w = p->adjvex;                          // 准备访问与弧相连的顶点
+            if (visited[w] == 0)                    // 若此顶点还没被访问
+                DFS(Graph, w, visited);             // 递归访问该顶点
+            p = p->nextarc;                         // 查找还未被访问的顶点
+        }
+    }
+    // 深度优先非递归算法
+    void DFS_Non_RC(ALGraph *alGraph, int v) {
+        int w, top = -1;
         ArcNode *p;
-        int w, i;
-        int queue[MAXV], front = 0, rear = 0;
-        int visited[MAXV];
-        for (i = 0; i < G->n; i++) {
+        int visited[MaxVertexNum];
+        int Stack[MaxVertexNum];
+        for (int i = 0; i < alGraph->vexnum; ++i) {
             visited[i] = 0;
         }
-        std::cout << v;
-        rear = (rear + 1) % MAXV;
-        queue[rear] = v;
-        while (front != rear) {
-            front = (front + 1) % MAXV;
-            w = queue[front];
-            p = G->adjlist[w].firstarc;
+        Stack[++top] = v;
+        visited[v] = 1;
+        while (top != -1) {
+            w = Stack[top--];
+            std::cout << alGraph->adjlist[w].data;
+            p = alGraph->adjlist->firstarc;
             while (p != nullptr) {
-                if (visited[p->adjvex] == 0) {
-                    std::cout << p->adjvex;
-                    visited[p->adjvex] = 1;
-                    rear = (rear + 1) % MAXV;
-                    queue[rear] = p->adjvex;
-                }
                 p = p->nextarc;
+                if (visited[p->adjvex] == 0) {// 若还未访问，则顶点入栈
+                    visited[p->adjvex] = 1;   // 置访问标志、防止再次入栈
+                    Stack[++top] = p->adjvex; // 将所有可能访问的顶点进栈
+                }
             }
         }
     }
 
-    void BFS1(ALGraph *G, int visited[]) {
-        int i;
-        for (i = 0; i < G->n; i++)
+    void BFSTraverse(ALGraph *alGraph) {
+        int visited[MaxVertexNum];// 访问标记数据
+        for (int i = 0; i < alGraph->vexnum; ++i) {
+            visited[i] = 0;
+        }
+        for (int i = 0; i < alGraph->vexnum; ++i) {
             if (visited[i] == 0)
-                BFS1(G, visited);
+                BFS(alGraph, i, visited);
+        }
+    }
+    // 广度优先搜索
+    void BFS(ALGraph *Graph, int v, int visited[]) {
+        ArcNode *p;
+        int w, i;
+        int queue[MaxVertexNum], front = 0, rear = 0;// 定义循环队列
+        for (i = 0; i < Graph->vexnum; i++) {        // 初始化标记数组
+            visited[i] = 0;
+        }
+        std::cout << v;                              // 访问结点
+        rear = (rear + 1) % MaxVertexNum;            // rear +1
+        queue[rear] = v;                             // 顶点入队
+        while (front != rear) {                      // 循环队列不空时
+            front = (front + 1) % MaxVertexNum;      // 出队
+            w = queue[front];                        // 队首顶点
+            p = Graph->adjlist[w].firstarc;          // 顶点第一条弧
+            while (p != nullptr) {                   // 当弧存在时
+                if (visited[p->adjvex] == 0) {       // 如果此顶点还未被访问
+                    std::cout << p->adjvex;          // 访问该弧所指顶点
+                    visited[p->adjvex] = 1;          // 置访问标志
+                    rear = (rear + 1) % MaxVertexNum;// 准备入队
+                    queue[rear] = p->adjvex;         // 该弧所指顶点入队
+                }
+                p = p->nextarc;// 开始处理下一条弧
+            }
+        }
     }
 
-    bool Connect(ALGraph *G, int visited[]) {
+    void BFS1(ALGraph *Graph, int visited[]) {
+        int i;
+        for (i = 0; i < Graph->vexnum; i++)
+            if (visited[i] == 0)
+                BFS1(Graph, visited);
+    }
+
+    bool Connect(ALGraph *Graph, int visited[]) {
         int i;
         bool flag = true;
-        for (i = 0; i < G->n; i++)
+        for (i = 0; i < Graph->vexnum; i++)
             visited[i] = 0;
-        DFS(G, 0, visited);
-        for (i = 0; i < G->n; i++) {
+        DFS(Graph, 0, visited);
+        for (i = 0; i < Graph->vexnum; i++) {
             if (visited[i] == 0) {
                 flag = false;
                 break;
@@ -70,23 +115,23 @@ namespace graph {
         return flag;
     }
 
-    void ExistPath(ALGraph *G, int u, int v, bool &has, int visited[]) {
+    void ExistPath(ALGraph *Graph, int u, int v, bool &has, int visited[]) {
         int w;
         ArcNode *p;
         if (u == v) {
             has = true;
             return;
         }
-        p = G->adjlist[u].firstarc;
+        p = Graph->adjlist[u].firstarc;
         while (p != nullptr) {
             w = p->adjvex;
             if (visited[w] == 0)
-                ExistPath(G, w, v, has, visited);
+                ExistPath(Graph, w, v, has, visited);
             p = p->nextarc;
         }
     }
 
-    void FindAPath(ALGraph *G, int u, int v, int path[], int d, int visited[]) {
+    void FindAPath(ALGraph *Graph, int u, int v, int path[], int d, int visited[]) {
         int w, i;
         ArcNode *p;
         visited[u] = 1;
@@ -98,67 +143,68 @@ namespace graph {
             std::cout << std::endl;
             return;
         }
-        p = G->adjlist[u].firstarc;
+        p = Graph->adjlist[u].firstarc;
         while (p != nullptr) {
             w = p->adjvex;
             if (visited[w] == 0) {
-                FindAPath(G, w, v, path, d, visited);
+                FindAPath(Graph, w, v, path, d, visited);
             }
             p = p->nextarc;
         }
     }
 
-    void FindPath(ALGraph *G, int u, int v, int path[], int d, int visited[]) {
+    void FindPath(ALGraph *Graph, int u, int v, int path[], int d, int visited[]) {
         int w, i;
         ArcNode *p;
         path[++d] = u;
         visited[u] = 1;
         if (u == v) {
-            for (i = 0; i < G->n; i++)
+            for (i = 0; i < d; i++)
                 std::cout << path[i];
             std::cout << std::endl;
+            return;
         }
-        p = G->adjlist[u].firstarc;
+        p = Graph->adjlist[u].firstarc;
         while (p != nullptr) {
             w = p->adjvex;
             if (visited[w] == 0)
-                FindPath(G, w, v, path, d, visited);
+                FindPath(Graph, w, v, path, d, visited);
             p = p->nextarc;
         }
-        visited[u] = 0;
+        visited[u] = 0;// 恢复环境使该节点可用
     }
 
-    void PathAll(ALGraph *G, int u, int v, int l, int path[], int d, int visited[]) {
+    void PathAll(ALGraph *Graph, int u, int v, int l, int path[], int d, int visited[]) {
         int w, i;
         ArcNode *p;
         path[++d] = u;
         visited[u] = 1;
         if (u == v && d == l) {
-            for (i = 0; i < G->n; i++)
+            for (i = 0; i < Graph->vexnum; i++)
                 std::cout << path[i];
             std::cout << std::endl;
         }
-        p = G->adjlist[u].firstarc;
+        p = Graph->adjlist[u].firstarc;
         while (p != nullptr) {
             w = p->adjvex;
             if (visited[w] == 0)
-                PathAll(G, w, v, l, path, d, visited);
+                PathAll(Graph, w, v, l, path, d, visited);
             p = p->nextarc;
         }
         visited[u] = 0;
     }
 
-    void ShortPath(ALGraph *G, int u, int v) {
+    void ShortPath(ALGraph *Graph, int u, int v) {
         typedef struct {
             int data;
             int patent;
         } Queue;
 
-        int w, i, visited[MAXV];
+        int w, i, visited[MaxVertexNum];
         ArcNode *p;
         int front = -1, rear = -1;
-        Queue queue[MAXV];
-        for (i = 0; i < G->n; i++)
+        Queue queue[MaxVertexNum];
+        for (i = 0; i < Graph->vexnum; i++)
             visited[i] = 0;
         queue[++rear].data = u;
         queue[rear].patent = -1;
@@ -175,7 +221,7 @@ namespace graph {
                 std::cout << queue[i].data;
                 break;
             }
-            p = G->adjlist[w].firstarc;
+            p = Graph->adjlist[w].firstarc;
             while (p != nullptr) {
                 if (visited[p->adjvex] == 0) {
                     visited[p->adjvex] = 1;
@@ -192,67 +238,67 @@ namespace graph {
         int w;
         std::cout << v;
         visited[v] = 1;
-        for (w = 0; w < g.n; w++)
+        for (w = 0; w < g.vexnum; w++)
             if (g.edges[v][w] != 0 && g.edges[v][w] != INT_FAST16_MIN && visited[w] == 0)
                 MDFS(g, w, visited);
     }
 
-    void DFS2(ALGraph *G, int v, int &vn, int &en, int visited[]) {
+    void DFS2(ALGraph *Graph, int v, int &vn, int &en, int visited[]) {
         ArcNode *p;
-        visited[v] = 1;
-        vn++;
-        p = G->adjlist[v].firstarc;
-        while (p != nullptr) {
-            en++;
-            if (visited[p->adjvex] == 0)
-                DFS2(G, p->adjvex, vn, en, visited);
-            p = p->nextarc;
+        visited[v] = 1;                                 // 置访问标记
+        vn++;                                           // 记录定点数
+        p = Graph->adjlist[v].firstarc;                 // 查找邻接顶点
+        while (p != nullptr) {                          // 弧存在
+            en++;                                       // 弧数+1
+            if (visited[p->adjvex] == 0)                // 未访问过,递归访问
+                DFS2(Graph, p->adjvex, vn, en, visited);// 递归访问
+            p = p->nextarc;                             // 处理下一个邻接顶点
         }
     }
 
-    bool GIsTree(ALGraph *G) {
-        int vn = 0, en = 0, i, visited[MAXV];
-        for (i = 0; i < G->n; i++)
+    bool GIsTree(ALGraph *Graph) {
+        int vn = 0, en = 0, i, visited[MaxVertexNum];
+        for (i = 0; i < Graph->vexnum; i++)
             visited[i] = 0;
-        DFS2(G, 0, vn, en, visited);
-        if (en == 2 * (vn - 1))
-            return true;
+        DFS2(Graph, 0, vn, en, visited);// 进行深度优先遍历
+        if (en == 2 * (vn - 1))         // 无向图中弧数记录了两次
+            return true;                // 符合树的条件
         else
-            return false;
+            return false;// 不符合树的条件
     }
 
-    void Cycle(ALGraph *G, int v, bool &has, int visited[]) {
+    void Cycle(ALGraph *Graph, int v, bool &has, int visited[]) {
         ArcNode *p;
         int w;
         visited[v] = 1;
-        p = G->adjlist[v].firstarc;
+        p = Graph->adjlist[v].firstarc;
         while (p != nullptr) {
             w = p->adjvex;
             if (visited[w] == 0)
-                Cycle(G, w, has, visited);
+                Cycle(Graph, w, has, visited);
             else
                 has = true;
             p = p->nextarc;
         }
     }
 
-    int Maxdist(ALGraph *G, int v) {
+    int Maxdist(ALGraph *Graph, int v) {
         ArcNode *p;
-        int Qu[MAXV], front = 0, rear = 0;
-        int visited[MAXV], i, j, k;
-        for (i = 0; i < G->n; i++)
+        int Qu[MaxVertexNum], front = 0, rear = 0;
+        int visited[MaxVertexNum], i, j, k;
+        for (i = 0; i < Graph->vexnum; i++)
             visited[i] = 0;
         Qu[++rear] = v;
         visited[v] = 1;
         while (front != rear) {
-            front = (front + 1) % MAXV;
+            front = (front + 1) % MaxVertexNum;
             k = Qu[front];
-            p = G->adjlist[k].firstarc;
+            p = Graph->adjlist[k].firstarc;
             while (p != nullptr) {
                 j = p->adjvex;
                 if (visited[j] == 0) {
                     visited[j] = 1;
-                    rear = (rear + 1) % MAXV;
+                    rear = (rear + 1) % MaxVertexNum;
                     Qu[rear] = j;
                 }
                 p = p->nextarc;
@@ -262,4 +308,4 @@ namespace graph {
     }
 
 
-}
+}// namespace graph

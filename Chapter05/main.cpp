@@ -98,6 +98,7 @@ void SearchXParent1(btree::BTNode *btNode, ElemType x) {
             }
             return;
         }
+        // top != 1 防止根节点被覆盖
         while (top != 1 && s[top].tag == 1)
             top--;
     }
@@ -191,5 +192,6 @@ int main(void) {
 //
 //    std::cout<<KLevelNumber(Tree1,3)<<std::endl;
 
-//    std::cout<<btree::BtDepth(Tree1)<<std::endl;
+    std::cout<<btree::BtDepth(Tree1)<<std::endl;
+    std::cout<<btree::BtDepth2(Tree1)<<std::endl;
 }
