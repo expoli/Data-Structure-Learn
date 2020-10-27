@@ -72,6 +72,6 @@ namespace btree {
     int BTWidth1(BTNode *b);
 
     int BTWidth2(BTNode *b);
-}
+}// namespace btree
 
-#endif //CHAPTER05_BTREE_H
+#endif//CHAPTER05_BTREE_H

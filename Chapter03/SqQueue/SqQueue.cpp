@@ -34,7 +34,7 @@ namespace sqqueue {
         e = q->data[q->front];
         return true;
     }
-}
+}// namespace sqqueue
 
 
 /*
@@ -61,12 +61,12 @@ namespace cirqueue {
     }
 
     bool EnQueue(CirQueue *&queue, ElemType e) {
-        int rear;   // 临时队尾指针
+        int rear;// 临时队尾指针
         if (queue->count == MAXSIZE)
             return false;
         else {
             rear = (queue->front + queue->count) % MAXSIZE;
-            rear = (rear + 1) % MAXSIZE; // rear++
+            rear = (rear + 1) % MAXSIZE;// rear++
             queue->data[rear] = e;
             queue->count++;
             return true;
@@ -83,4 +83,4 @@ namespace cirqueue {
             return true;
         }
     }
-}
+}// namespace cirqueue

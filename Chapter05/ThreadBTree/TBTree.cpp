@@ -43,24 +43,24 @@ namespace threadtree {
             PreThread(p->rchild, pre);
         }
     }
-//
-//    void PostThread(ThreadTree *&p, ThreadNode *&pre) {
-//        if (p != nullptr) {
-//            PreThread(p->lchild, pre);
-//            PreThread(p->rchild, pre);
-//            if (p->lchild == nullptr) {
-//                p->lchild = pre;
-//                p->ltag = 1;
-//            } else
-//                p->ltag = 0;
-//            if (pre->rchild == nullptr) {
-//                pre->rchild = p;
-//                pre->rtag = 1;
-//            } else
-//                pre->rtag = 0;
-//            pre = p;
-//        }
-//    }
+    //
+    //    void PostThread(ThreadTree *&p, ThreadNode *&pre) {
+    //        if (p != nullptr) {
+    //            PreThread(p->lchild, pre);
+    //            PreThread(p->rchild, pre);
+    //            if (p->lchild == nullptr) {
+    //                p->lchild = pre;
+    //                p->ltag = 1;
+    //            } else
+    //                p->ltag = 0;
+    //            if (pre->rchild == nullptr) {
+    //                pre->rchild = p;
+    //                pre->rtag = 1;
+    //            } else
+    //                pre->rtag = 0;
+    //            pre = p;
+    //        }
+    //    }
 
     // 带头结点的线索二叉树
     ThreadNode *CreateInThreadTree(ThreadNode *threadNode) {
@@ -89,7 +89,7 @@ namespace threadtree {
             while (p->ltag == 0)
                 p = p->lchild;
             std::cout << p->data;
-            while (p->rtag == 1 && p->rchild != threadTree) {   // 后继线索节点
+            while (p->rtag == 1 && p->rchild != threadTree) {// 后继线索节点
                 p = p->rchild;
                 std::cout << p->data;
             }
@@ -97,4 +97,4 @@ namespace threadtree {
         }
     }
 
-}
+}// namespace threadtree

@@ -68,4 +68,4 @@ namespace linkqueue {
         free(p);
         return true;
     }
-}
+}// namespace linkqueue

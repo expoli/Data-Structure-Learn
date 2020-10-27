@@ -19,6 +19,6 @@ namespace threadtree {
     ThreadNode *CreateInThreadTree(ThreadNode *threadNode);
 
     void InThreadOrder(ThreadNode *threadTree);
-}
+}// namespace threadtree
 
-#endif //CHAPTER05_TBTREE_H
+#endif//CHAPTER05_TBTREE_H

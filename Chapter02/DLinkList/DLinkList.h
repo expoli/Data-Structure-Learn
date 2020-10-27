@@ -22,6 +22,6 @@ namespace dlinklist {
     bool ListDelete(DLinkList *&L, int i, ElemType &e);
 
     void Reverse(DLinkList *&L);
-}
+}// namespace dlinklist
 
-#endif //TEST_DLINKLIST_H
+#endif//TEST_DLINKLIST_H

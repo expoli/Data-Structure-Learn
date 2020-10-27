@@ -44,4 +44,4 @@ namespace sqstack {
     bool StackOverflow(SqStack *s) {
         return s->top == MAXSIZE - 1;
     }
-}
+}// namespace sqstack

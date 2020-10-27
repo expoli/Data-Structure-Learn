@@ -32,7 +32,6 @@ namespace sqlist {
     void ListInster(SqList *&L, ElemType e);
 
     bool ListDelete(SqList *&L, int i, ElemType e);
-}
+}// namespace sqlist
 
-#endif //TEST_SQLIST_H
-
+#endif//TEST_SQLIST_H

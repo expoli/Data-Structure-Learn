@@ -12,7 +12,7 @@ namespace sqqueue {
         ElemType data[MAXSIZE];
         int front, rear;
     } SqQueue;
-}
+}// namespace sqqueue
 
 namespace cirqueue {
     typedef struct {
@@ -20,6 +20,6 @@ namespace cirqueue {
         int front;
         int count;
     } CirQueue;
-}
+}// namespace cirqueue
 
-#endif //CHAPTER03_SQQUEUE_H
+#endif//CHAPTER03_SQQUEUE_H

@@ -24,6 +24,6 @@ namespace linkstack {
 
     bool GetTop(LiStack *Stack, ElemType &e);
 
-}
+}// namespace linkstack
 
-#endif //CHAPTER03_LINKSTACK_H
+#endif//CHAPTER03_LINKSTACK_H

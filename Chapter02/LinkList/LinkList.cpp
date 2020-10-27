@@ -2,8 +2,8 @@
 // Created by expoli on 2020/9/4.
 //
 
-#include <iostream>
 #include "LinkList.h"
+#include <iostream>
 
 namespace linklist {
     // 头插法
@@ -20,7 +20,7 @@ namespace linklist {
         }
     }
 
-// 尾插法
+    // 尾插法
     void CreateListR(LinkList *&L, ElemType a[], int n) {
         LinkList *s, *r;
         int i;
@@ -35,13 +35,13 @@ namespace linklist {
         r->next = NULL;
     }
 
-//
+    //
     void InitList(LinkList *&L) {
         L = (LinkList *) malloc(sizeof(LinkList));
         L->next = NULL;
     }
 
-//
+    //
     void DestroyList(LinkList *&L) {
         LinkList *pre, *p;
         pre = L;
@@ -54,7 +54,7 @@ namespace linklist {
         free(pre);
     }
 
-//
+    //
     bool ListEmpty(LinkList *L) {
         int n = 0;
         LinkList *p;
@@ -66,7 +66,7 @@ namespace linklist {
         return n;
     }
 
-//
+    //
     void DispList(LinkList *L) {
         LinkList *p;
         p = L->next;
@@ -115,7 +115,7 @@ namespace linklist {
         }
     }
 
-//
+    //
     int LocateElem(LinkList *L, ElemType e) {
         LinkList *p;
         p = L->next;
@@ -134,7 +134,7 @@ namespace linklist {
             return i + 1;
     }
 
-//
+    //
     bool ListInsret(LinkList *&L, int i, ElemType e) {
         int j = 0;
         i--;
@@ -154,7 +154,7 @@ namespace linklist {
         }
     }
 
-//
+    //
     bool ListDelete(LinkList *&L, int i, ElemType &e) {
         LinkList *p, *q;
         p = L->next;
@@ -176,6 +176,4 @@ namespace linklist {
             return true;
         }
     }
-}
-
-
+}// namespace linklist

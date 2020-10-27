@@ -1,7 +1,7 @@
-#include <iostream>
-#include "SqList/SqList.h"
-#include "LinkList/LinkList.h"
 #include "DLinkList/DLinkList.h"
+#include "LinkList/LinkList.h"
+#include "SqList/SqList.h"
+#include <iostream>
 
 bool delete_same(sqlist::SqList *&L) {
     if (L->length == 0)
@@ -452,18 +452,18 @@ int main() {
     }
     p->next = LA->next->next->next->next->next;
     linklist::DispList(LA);
-//    Get_Common(LA, LB, LC);
+    //    Get_Common(LA, LB, LC);
     linklist::DispList(LB);
     linklist::DispList(LC);
-//    linklist::DispList(LB);
-//    Delete_Same_2(LB);
-//    linklist::DispList(LB);
-//    int temp;
-//    if (linklist::GetElem_Bottom_K(LC, 20, temp))
-//        std::cout << temp << std::endl;
-//    DisCreate_1(L, LB);
-//    linklist::DispList(L);
-//    linklist::DispList(LB);
+    //    linklist::DispList(LB);
+    //    Delete_Same_2(LB);
+    //    linklist::DispList(LB);
+    //    int temp;
+    //    if (linklist::GetElem_Bottom_K(LC, 20, temp))
+    //        std::cout << temp << std::endl;
+    //    DisCreate_1(L, LB);
+    //    linklist::DispList(L);
+    //    linklist::DispList(LB);
     linklist::LinkList *e;
     Get_First_Common_Node(LA, LB, e);
     std::cout << e << std::endl;
@@ -471,26 +471,26 @@ int main() {
 
     std::cout << e << std::endl;
     linklist::DispList(LA);
-//    Get_Common(LA, LB, LC);
+    //    Get_Common(LA, LB, LC);
     linklist::DispList(LB);
     linklist::DispList(LC);
-//    Del_X_3(LA,10);
-//    linklist::DispList(LA);
-//    Del_X_2(LB,7);
-//    linklist::DispList(LB);
-//    Del_X_1(LC, 10);
-//    linklist::DispList(LC);
-//    DispList(L);
+    //    Del_X_3(LA,10);
+    //    linklist::DispList(LA);
+    //    Del_X_2(LB,7);
+    //    linklist::DispList(LB);
+    //    Del_X_1(LC, 10);
+    //    linklist::DispList(LC);
+    //    DispList(L);
 
-//    delete_same(L);
-//    DispList(L);
+    //    delete_same(L);
+    //    DispList(L);
 
-//    ElemType a[] = {11, 13, 15, 17, 19};
-//    ElemType b[] = {2, 4, 6, 8, 20};
-//    int n = 5;
-//    std::cout << M_Search(a, b, n) << std::endl;
-//    std::cout << M_Search_2(a, b, n) << std::endl;
-//    std::cout << M_Search_3(a, b, n) << std::endl;
-//    std::cout << Majaority(a, 6) << std::endl;
+    //    ElemType a[] = {11, 13, 15, 17, 19};
+    //    ElemType b[] = {2, 4, 6, 8, 20};
+    //    int n = 5;
+    //    std::cout << M_Search(a, b, n) << std::endl;
+    //    std::cout << M_Search_2(a, b, n) << std::endl;
+    //    std::cout << M_Search_3(a, b, n) << std::endl;
+    //    std::cout << Majaority(a, 6) << std::endl;
     return 0;
 }

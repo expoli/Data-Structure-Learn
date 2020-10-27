@@ -135,7 +135,6 @@ void SearchXParent2(btree::BTNode *btNode, ElemType x) {
             return;
         }
     }
-
 }
 
 int main(void) {
@@ -181,17 +180,17 @@ int main(void) {
     SearchXParent1(Tree1, 'F');
     SearchXParent2(Tree1, 'F');
 
-//    std::cout << btree::dnodes(Tree1) << std::endl;
-//    std::cout << btree::LeafNodes(Tree1) << std::endl;
-//
-//    std::cout << KValue(Tree1, 3) << std::endl;
-//
-//    std::cout<<btree::IsComplete(Tree1)<<std::endl;
-//
-//    btree::AllPath(Tree1);
-//
-//    std::cout<<KLevelNumber(Tree1,3)<<std::endl;
+    //    std::cout << btree::dnodes(Tree1) << std::endl;
+    //    std::cout << btree::LeafNodes(Tree1) << std::endl;
+    //
+    //    std::cout << KValue(Tree1, 3) << std::endl;
+    //
+    //    std::cout<<btree::IsComplete(Tree1)<<std::endl;
+    //
+    //    btree::AllPath(Tree1);
+    //
+    //    std::cout<<KLevelNumber(Tree1,3)<<std::endl;
 
-    std::cout<<btree::BtDepth(Tree1)<<std::endl;
-    std::cout<<btree::BtDepth2(Tree1)<<std::endl;
+    std::cout << btree::BtDepth(Tree1) << std::endl;
+    std::cout << btree::BtDepth2(Tree1) << std::endl;
 }

@@ -19,6 +19,6 @@ namespace linkqueue {
         LinkNode *front;
         LinkNode *rear;
     } LiQueue;
-}
+}// namespace linkqueue
 
-#endif //CHAPTER03_LINKQUEUE_H
+#endif//CHAPTER03_LINKQUEUE_H

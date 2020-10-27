@@ -335,13 +335,13 @@ namespace btree {
         }
     }
 
-    void Swap(BiTree *&biTree){
-        if (biTree!= nullptr){
+    void Swap(BiTree *&biTree) {
+        if (biTree != nullptr) {
             Swap(biTree->lchild);
             Swap(biTree->rchild);
             BiTree *temp = biTree->lchild;
-            biTree->lchild=biTree->rchild;
-            biTree->rchild=temp;
+            biTree->lchild = biTree->rchild;
+            biTree->rchild = temp;
         }
     }
 
@@ -383,7 +383,7 @@ namespace btree {
                     std::cout << qu[p].node->data;
                     p = qu[p].parent;
                 }
-                std::cout << " "; //格式化一下输出
+                std::cout << " ";//格式化一下输出
             }
             if (q->lchild != nullptr) {
                 rear++;
@@ -420,7 +420,8 @@ namespace btree {
         auto *root = (BTNode *) malloc(sizeof(BTNode));
         int i = 0;
         root->data = *pre;
-        for (i = l2; in[i] != *pre; i++);
+        for (i = l2; in[i] != *pre; i++)
+            ;
         int llen = i - l2;
         int rlen = h2 - i;
         if (llen)
@@ -455,7 +456,8 @@ namespace btree {
         auto *root = (BTNode *) malloc(sizeof(BTNode));
         int i = 0;
         root->data = post[h1 - 1];
-        for (i = l2; in[i] != root->data; i++);
+        for (i = l2; in[i] != root->data; i++)
+            ;
         int llen = i - l2;
         int rlen = h2 - i;
         if (llen)
@@ -559,6 +561,7 @@ namespace btree {
                     width = n;
             }
             return width;
-        } else return 0;
+        } else
+            return 0;
     }
-}
+}// namespace btree
