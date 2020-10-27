@@ -9,10 +9,10 @@ namespace graph {
 
     void DFSTraverse(ALGraph *alGraph) {
         int visited[MaxVertexNum];
-        for (int i = 0; i < alGraph->vexnum; ++i) {
+        for (int i = 0; i < alGraph->vexnum; ++i) {// 从0开始
             visited[i] = 0;
         }
-        for (int i = 0; i < alGraph->vexnum; ++i) {
+        for (int i = 0; i < alGraph->vexnum; ++i) {// 从零号顶点开始遍历
             if (!visited[i])
                 DFS(alGraph, i, visited);
         }
