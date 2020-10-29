@@ -9,12 +9,12 @@
 namespace linkqueue {
     void InitQueue(LiQueue *&queue) {
         queue = (LiQueue *) malloc(sizeof(LiQueue));
-        queue->front = queue->rear = NULL;
+        queue->front = queue->rear = nullptr;
     }
 
     void DestroyQueue_1(LiQueue *&queue) {
-        QNode *p = queue->front, *r;
-        while (p != NULL) {
+        LinkNode *p = queue->front, *r;
+        while (p != nullptr) {
             r = p->next;
             std::cout << "free" << p->data << std::endl;
             free(p);
@@ -24,10 +24,10 @@ namespace linkqueue {
     }
 
     void DestroyQueue_2(LiQueue *&queue) {
-        QNode *p = queue->front, *r;
-        if (p != NULL) {
+        LinkNode *p = queue->front, *r;
+        if (p != nullptr) {
             r = p->next;
-            while (r != NULL) {
+            while (r != nullptr) {
                 std::cout << "free" << p->data << std::endl;
                 free(p);
                 p = r;
@@ -39,15 +39,15 @@ namespace linkqueue {
     }
 
     bool QueueEmpty(LiQueue *queue) {
-        return (queue->front == NULL);
+        return (queue->front == nullptr);
     }
 
     void EnQueue(LiQueue *&queue, ElemType e) {
-        QNode *p, *s;
-        s = (QNode *) malloc(sizeof(QNode));
+        LinkNode *p, *s;
+        s = (LinkNode *) malloc(sizeof(LinkNode));
         s->data = e;
-        s->next = NULL;
-        if (queue->rear == NULL) {
+        s->next = nullptr;
+        if (queue->rear == nullptr) {
             queue->front = s;
             queue->rear = s;
         } else {
@@ -57,15 +57,15 @@ namespace linkqueue {
     }
 
     bool DeQueue(LiQueue *&queue, ElemType &x) {
-        QNode *p = queue->front;
-        if (p == NULL)
+        LinkNode *p = queue->front;
+        if (p == nullptr)
             return false;
         if (queue->front == queue->rear)
-            queue->front = queue->rear = NULL;
+            queue->front = queue->rear = nullptr;
         else
             queue->front = p->next;
         x = p->data;
         free(p);
         return true;
     }
-}
+}// namespace linkqueue

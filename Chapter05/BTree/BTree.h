@@ -9,7 +9,7 @@ namespace btree {
     typedef struct node {
         ElemType data;
         struct node *lchild, *rchild;
-    } BTNode;
+    } BTNode, BiTree;
 
     void CreateBTNode(BTNode *&b, const char *str);
 
@@ -25,6 +25,8 @@ namespace btree {
 
     int BtDepth(BTNode *btNode);
 
+    int BtDepth2(BTNode *btNode);
+
     int BtWidth(BTNode *btNode);
 
     bool IsComplete(BTNode *btNode);
@@ -36,6 +38,12 @@ namespace btree {
     void PostOrder(BTNode *btNode);
 
     void InOrder(BTNode *btNode);
+
+    void PreOrder2(BTNode *btNode);
+
+    void PostOrder2(BTNode *btNode);
+
+    void InOrder2(BTNode *btNode);
 
     void LevelOrder(BTNode *btNode);
 
@@ -51,9 +59,9 @@ namespace btree {
 
     void AllPath(BTNode *btNode);
 
-    BTNode *CreateBT1(char *pre, char *in, int n);
+    BTNode *PreInCreat(char *pre, char *in, int n);
 
-    BTNode *CreateBT2(char *post, char *in, int n);
+    BTNode *PostInCreat(char *post, char *in, int n);
 
     int dnodes(BTNode *btNode);
 
@@ -64,6 +72,6 @@ namespace btree {
     int BTWidth1(BTNode *b);
 
     int BTWidth2(BTNode *b);
-}
+}// namespace btree
 
-#endif //CHAPTER05_BTREE_H
+#endif//CHAPTER05_BTREE_H

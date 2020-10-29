@@ -50,4 +50,4 @@ namespace linkstack {
         e = stack->next->data;
         return true;
     }
-}
+}// namespace linkstack

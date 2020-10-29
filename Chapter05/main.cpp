@@ -3,6 +3,7 @@
 //
 
 #include "BTree/BTree.h"
+#include "ThreadBTree/TBTree.h"
 #include "iostream"
 
 ElemType KValue(btree::BTNode *btNode, int k) {
@@ -97,8 +98,9 @@ void SearchXParent1(btree::BTNode *btNode, ElemType x) {
             }
             return;
         }
-        while (top != 1` && s[top].tag == 1)
-        top--;
+        // top != 1 防止根节点被覆盖
+        while (top != 1 && s[top].tag == 1)
+            top--;
     }
 }
 
@@ -133,7 +135,6 @@ void SearchXParent2(btree::BTNode *btNode, ElemType x) {
             return;
         }
     }
-
 }
 
 int main(void) {
@@ -147,12 +148,24 @@ int main(void) {
     btree::PreOrder(Tree1);
     std::cout << std::endl;
 
+    std::cout << "PreOrder2:\t";
+    btree::PreOrder2(Tree1);
+    std::cout << std::endl;
+
     std::cout << "InOrder:\t";
     btree::InOrder(Tree1);
     std::cout << std::endl;
 
+    std::cout << "InOrder2:\t";
+    btree::InOrder2(Tree1);
+    std::cout << std::endl;
+
     std::cout << "PostOrder:\t";
     btree::PostOrder(Tree1);
+    std::cout << std::endl;
+
+    std::cout << "PostOrder2:\t";
+    btree::PostOrder2(Tree1);
     std::cout << std::endl;
 
     std::cout << "Swap" << std::endl;
@@ -167,16 +180,17 @@ int main(void) {
     SearchXParent1(Tree1, 'F');
     SearchXParent2(Tree1, 'F');
 
-//    std::cout << btree::dnodes(Tree1) << std::endl;
-//    std::cout << btree::LeafNodes(Tree1) << std::endl;
-//
-//    std::cout << KValue(Tree1, 3) << std::endl;
-//
-//    std::cout<<btree::IsComplete(Tree1)<<std::endl;
-//
-//    btree::AllPath(Tree1);
-//
-//    std::cout<<KLevelNumber(Tree1,3)<<std::endl;
+    //    std::cout << btree::dnodes(Tree1) << std::endl;
+    //    std::cout << btree::LeafNodes(Tree1) << std::endl;
+    //
+    //    std::cout << KValue(Tree1, 3) << std::endl;
+    //
+    //    std::cout<<btree::IsComplete(Tree1)<<std::endl;
+    //
+    //    btree::AllPath(Tree1);
+    //
+    //    std::cout<<KLevelNumber(Tree1,3)<<std::endl;
 
-//    std::cout<<btree::BtDepth(Tree1)<<std::endl;
+    std::cout << btree::BtDepth(Tree1) << std::endl;
+    std::cout << btree::BtDepth2(Tree1) << std::endl;
 }

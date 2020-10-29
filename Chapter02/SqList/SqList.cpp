@@ -2,8 +2,8 @@
 // Created by expoli on 2020/9/4.
 //
 
-#include <iostream>
 #include "SqList.h"
+#include <iostream>
 
 namespace sqlist {
     // 建立顺序表
@@ -82,7 +82,7 @@ namespace sqlist {
         return true;
     }
 
-// 有序表插入
+    // 有序表插入
     void ListInsert(SqList *&L, ElemType e) {
         int i = 0, j;
         while (i < L->length && L->data[i] < e)
@@ -93,7 +93,7 @@ namespace sqlist {
         L->length++;
     }
 
-// 有序表二路归并
+    // 有序表二路归并
     void UnionList(SqList *LA, SqList *LB, SqList *&LC) {
         LC = (SqList *) malloc(sizeof(SqList));
         int i = 0, j = 0, k = 0;
@@ -120,4 +120,4 @@ namespace sqlist {
         }
         LC->length = k;
     }
-}
+}// namespace sqlist

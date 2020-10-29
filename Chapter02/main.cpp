@@ -1,7 +1,7 @@
-#include <iostream>
-#include "SqList/SqList.h"
-#include "LinkList/LinkList.h"
 #include "DLinkList/DLinkList.h"
+#include "LinkList/LinkList.h"
+#include "SqList/SqList.h"
+#include <iostream>
 
 bool delete_same(sqlist::SqList *&L) {
     if (L->length == 0)
@@ -103,24 +103,11 @@ int Majaority(int A[], int n) {
         return -1;
 }
 
-void Del_X_3(linklist::LinkList *&L, ElemType x) {
-    linklist::LinkList *p;
-    if (L == NULL)
-        return;
-    if (L->data == x) {
-        p = L;
-        L = L->next;
-        free(p);
-        Del_X_3(L, x);
-    } else
-        Del_X_3(L->next, x);
-}
-
 void Del_X_1(linklist::LinkList *&L, ElemType x) {
     linklist::LinkList *pre, *p;
     pre = L;
     p = L->next;
-    while (p != NULL) {
+    while (p != nullptr) {
         if (p->data == x) {
             pre->next = p->next;
             free(p);
@@ -132,18 +119,54 @@ void Del_X_1(linklist::LinkList *&L, ElemType x) {
     }
 }
 
+void Del_X_2(linklist::LinkList *&L, ElemType x) {
+    linklist::LinkList *p;
+    if (L->next == nullptr)
+        return;
+    if (L->next->data == x) {
+        p = L->next;
+        L->next = p->next;
+        free(p);
+        Del_X_2(L, x);
+    }
+    Del_X_2(L->next, x);
+}
+
+void Del_X_3(linklist::LinkList *&L, ElemType x) {
+    linklist::LinkList *p;
+    if (L == nullptr)
+        return;
+    if (L->data == x) {
+        p = L;
+        L = L->next;
+        free(p);
+        Del_X_3(L, x);
+    } else
+        Del_X_3(L->next, x);
+}
+
+// 当单链表带头节点时，L应为头指针
+// R_Print(LA->next);
 void R_Print(linklist::LinkList *L) {
-    if (L->next != NULL)
+    if (L->next != nullptr)
         R_Print(L->next);
-    if (L != NULL)
-        std::cout << L->data << " ";
+    std::cout << L->data << " ";
+}
+
+// 当单链表带头节点时，L应为头指针
+// R_Print(LA->next);
+void R_Print_1(linklist::LinkList *L) {
+    if (L == nullptr)
+        return;
+    R_Print_1(L->next);
+    std::cout << L->data << " ";
 }
 
 void Reverse_1(linklist::LinkList *&L) {
     linklist::LinkList *p, *r;
     p = L->next;
-    L->next = NULL;
-    while (p != NULL) {
+    L->next = nullptr;
+    while (p != nullptr) {
         r = p->next;
         p->next = L->next;
         L->next = p;
@@ -153,8 +176,8 @@ void Reverse_1(linklist::LinkList *&L) {
 
 void Reverse_2(linklist::LinkList *&L) {
     linklist::LinkList *pre, *p = L->next, *r = p->next;
-    p->next = NULL;
-    while (r != NULL) {
+    p->next = nullptr;
+    while (r != nullptr) {
         pre = p;
         p = r;
         r = r->next;
@@ -166,19 +189,12 @@ void Reverse_2(linklist::LinkList *&L) {
 void Reverse_3(linklist::LinkList *&L) {
     linklist::LinkList *p, *q;
     p = L->next;
-    L->next = NULL;
-    while (p->next != NULL) {
-        if (L->next == NULL) {
-            q = p->next;
-            L->next = p;
-            p->next = NULL;
-            p = q;
-        } else {
-            q = p->next;
-            p->next = L->next;
-            L->next = p;
-            p = q;
-        }
+    L->next = nullptr;
+    while (p->next != nullptr) {
+        q = p->next;
+        p->next = L->next;
+        L->next = p;
+        p = q;
     }
     p->next = L->next;
     L->next = p;
@@ -189,12 +205,12 @@ void Sort(linklist::LinkList *&L) {
     // 创建只有一个数据结点的表
     p = L->next;
     r = p->next;
-    p->next = NULL;
+    p->next = nullptr;
     p = r;
-    while (p != NULL) {
+    while (p != nullptr) {
         r = p->next;
         pre = L;
-        while (pre->next != NULL && pre->next->data < p->data)
+        while (pre->next != nullptr && pre->next->data < p->data)
             pre = pre->next;
         p->next = pre->next;
         pre->next = p;
@@ -206,7 +222,7 @@ void RangerDelete(linklist::LinkList *&L, ElemType min, ElemType max) {
     linklist::LinkList *pre, *p;
     pre = L;
     p = L->next;
-    while (p != NULL) {
+    while (p != nullptr) {
         if (p->data > min && p->data < max) {
             pre->next = p->next;
             free(p);
@@ -218,14 +234,15 @@ void RangerDelete(linklist::LinkList *&L, ElemType min, ElemType max) {
     }
 }
 
-bool Search_1st_Common(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkList *&e) {
+// 获取两个链表的公共结点
+bool Get_First_Common_Node(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkList *&e) {
     linklist::LinkList *longlist = LA->next, *shortlist = LB->next;
     int len1 = 0, len2 = 0, dist = 0;
-    while (longlist != NULL) {
+    while (longlist != nullptr) {
         longlist = longlist->next;
         len1++;
     }
-    while (shortlist != NULL) {
+    while (shortlist != nullptr) {
         shortlist = shortlist->next;
         len2++;
     }
@@ -240,7 +257,7 @@ bool Search_1st_Common(linklist::LinkList *LA, linklist::LinkList *LB, linklist:
     }
     while (dist--)
         longlist = longlist->next;
-    while (shortlist != NULL && longlist != NULL) {
+    while (shortlist != nullptr && longlist != nullptr) {
         if (shortlist == longlist) {
             e = shortlist;
             return true;
@@ -249,16 +266,27 @@ bool Search_1st_Common(linklist::LinkList *LA, linklist::LinkList *LB, linklist:
             shortlist = shortlist->next;
         }
     }
-    e = NULL;
+    e = nullptr;
     return false;
+}
+
+bool Get_First_Common_Node_1(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkList *&e) {
+    Reverse_1(LA);
+    Reverse_1(LB);
+    linklist::LinkList *pa = LA->next, *pb = LB->next;
+    while (pa == pb) {
+        pa = LA->next;
+        pb = LB->next;
+        e = pa;
+    }
 }
 
 void Min_Delete(linklist::LinkList *&head) {
     linklist::LinkList *p, *pre, *u;
-    while (head->next != NULL) {
+    while (head->next != nullptr) {
         pre = head;
         p = pre->next;
-        while (p->next != NULL) {
+        while (p->next != nullptr) {
             if (pre->next->data > p->next->data)
                 pre = p;
             p = p->next;
@@ -277,7 +305,7 @@ void DisCreate_1(linklist::LinkList *&A, linklist::LinkList *&B) {
     la = A;
     lb = B;
     p = A->next;
-    while (p != NULL) {
+    while (p != nullptr) {
         if (i % 2 == 0) {
             lb->next = p;
             lb = p;
@@ -290,17 +318,17 @@ void DisCreate_1(linklist::LinkList *&A, linklist::LinkList *&B) {
             i++;
         }
     }
-    la->next = NULL;
-    lb->next = NULL;
+    la->next = nullptr;
+    lb->next = nullptr;
 }
 
 void Delete_Same_1(linklist::LinkList *&L) {
     linklist::LinkList *p, *q;
     p = L->next;
-    if (p == NULL)
+    if (p == nullptr)
         return;
     q = p->next;
-    while (q != NULL) {
+    while (q != nullptr) {
         if (p->data == q->data) {
             p->next = q->next;
             std::cout << "free" << q->data << std::endl;
@@ -316,7 +344,7 @@ void Delete_Same_2(linklist::LinkList *&L) {
     linklist::LinkList *pre, *p, *q;
     pre = L;
     p = L->next;
-    while (p != NULL) {
+    while (p != nullptr) {
         if (pre->data == p->data)
             p = p->next;
         else if (pre->next != p) {
@@ -334,8 +362,8 @@ void MergeList(linklist::LinkList *&LA, linklist::LinkList *&LB) {
     linklist::LinkList *pa, *pb, *q;
     pa = LA->next;
     pb = LB->next;
-    LA->next = NULL;
-    while (pa != NULL && pb != NULL) {
+    LA->next = nullptr;
+    while (pa != nullptr && pb != nullptr) {
         if (pa->data < pb->data) {
             q = pa->next;
             pa->next = LA->next;
@@ -348,13 +376,13 @@ void MergeList(linklist::LinkList *&LA, linklist::LinkList *&LB) {
             pb = q;
         }
     }
-    while (pa != NULL) {
+    while (pa != nullptr) {
         q = pa->next;
         pa->next = LA->next;
         LA->next = pa;
         pa = q;
     }
-    while (pb != NULL) {
+    while (pb != nullptr) {
         q = pb->next;
         pb->next = LA->next;
         LA->next = pb;
@@ -363,13 +391,14 @@ void MergeList(linklist::LinkList *&LA, linklist::LinkList *&LB) {
     free(LB);
 }
 
-void Get_Common(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkList *&LC) {
+// 获取两个有序单链表中大小相等的元素
+void Get_Common_ElemType(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkList *&LC) {
     LC = (linklist::LinkList *) malloc(sizeof(linklist::LinkList));
     linklist::LinkList *la, *lb, *s, *r;
     la = LA->next;
     lb = LB->next;
     r = LC;
-    while (la->next != NULL && lb->next != NULL) {
+    while (la->next != nullptr && lb->next != nullptr) {
         if (la->data < lb->data)
             la = la->next;
         else if (lb->data < la->data)
@@ -383,9 +412,28 @@ void Get_Common(linklist::LinkList *LA, linklist::LinkList *LB, linklist::LinkLi
             lb = lb->next;
         }
     }
-    r->next = NULL;
+    r->next = nullptr;
 }
 
+bool Pattern(linklist::LinkList *LA, linklist::LinkList *LB) {
+    linklist::LinkList *la = LA->next;
+    linklist::LinkList *pre = la;
+    linklist::LinkList *lb = LB->next;
+    while (la && lb) {
+        if (la->next == lb->next) {
+            la = la->next;
+            lb = lb->next;
+        } else {
+            la = pre->next;
+            pre = la;
+            lb = LB;
+        }
+    }
+    if (la == nullptr)
+        return false;
+    else
+        return true;
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -396,33 +444,53 @@ int main() {
     linklist::LinkList *LB;
     linklist::LinkList *LC;
     linklist::CreateListR(LA, a, 10);
-    linklist::CreateListR(LB, b, 10);
+    linklist::CreateListR(LB, a, 5);
+    linklist::CreateListR(LC, a, 10);
+    linklist::LinkList *p = LB->next;
+    while (p->next != nullptr) {
+        p = p->next;
+    }
+    p->next = LA->next->next->next->next->next;
     linklist::DispList(LA);
-    Get_Common(LA, LB, LC);
+    //    Get_Common(LA, LB, LC);
+    linklist::DispList(LB);
     linklist::DispList(LC);
-//    linklist::DispList(LB);
-//    Delete_Same_2(LB);
-//    linklist::DispList(LB);
-    int temp;
-    if (linklist::GetElem_Bottom_K(LC, 20, temp))
-        std::cout << temp << std::endl;
-//    DisCreate_1(L, LB);
-//    linklist::DispList(L);
-//    linklist::DispList(LB);
-//    R_Print(L);
-//    Del_X_3(L,1);
-//    Del_X_1(L, 1);
-//    DispList(L);
+    //    linklist::DispList(LB);
+    //    Delete_Same_2(LB);
+    //    linklist::DispList(LB);
+    //    int temp;
+    //    if (linklist::GetElem_Bottom_K(LC, 20, temp))
+    //        std::cout << temp << std::endl;
+    //    DisCreate_1(L, LB);
+    //    linklist::DispList(L);
+    //    linklist::DispList(LB);
+    linklist::LinkList *e;
+    Get_First_Common_Node(LA, LB, e);
+    std::cout << e << std::endl;
+    Get_First_Common_Node_1(LA, LB, e);
 
-//    delete_same(L);
-//    DispList(L);
+    std::cout << e << std::endl;
+    linklist::DispList(LA);
+    //    Get_Common(LA, LB, LC);
+    linklist::DispList(LB);
+    linklist::DispList(LC);
+    //    Del_X_3(LA,10);
+    //    linklist::DispList(LA);
+    //    Del_X_2(LB,7);
+    //    linklist::DispList(LB);
+    //    Del_X_1(LC, 10);
+    //    linklist::DispList(LC);
+    //    DispList(L);
 
-//    ElemType a[] = {11, 13, 15, 17, 19};
-//    ElemType b[] = {2, 4, 6, 8, 20};
-//    int n = 5;
-//    std::cout << M_Search(a, b, n) << std::endl;
-//    std::cout << M_Search_2(a, b, n) << std::endl;
-//    std::cout << M_Search_3(a, b, n) << std::endl;
-//    std::cout << Majaority(a, 6) << std::endl;
+    //    delete_same(L);
+    //    DispList(L);
+
+    //    ElemType a[] = {11, 13, 15, 17, 19};
+    //    ElemType b[] = {2, 4, 6, 8, 20};
+    //    int n = 5;
+    //    std::cout << M_Search(a, b, n) << std::endl;
+    //    std::cout << M_Search_2(a, b, n) << std::endl;
+    //    std::cout << M_Search_3(a, b, n) << std::endl;
+    //    std::cout << Majaority(a, 6) << std::endl;
     return 0;
 }

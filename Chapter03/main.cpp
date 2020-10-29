@@ -2,8 +2,8 @@
 // Created by expoli on 2020/9/6.
 //
 
-#include "SqStack/SqStack.h"
 #include "LinkStack/LinkStack.h"
+#include "SqStack/SqStack.h"
 #include "iostream"
 
 bool symmetry(char str[]) {

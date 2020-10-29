@@ -27,6 +27,6 @@ namespace sqstack {
     bool GetTop(SqStack *s, ElemType &e);
 
     bool StackOverflow(SqStack *s);
-}
+}// namespace sqstack
 
-#endif //CHAPTER03_SQSTACK_H
+#endif//CHAPTER03_SQSTACK_H

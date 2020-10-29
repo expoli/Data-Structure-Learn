@@ -33,8 +33,6 @@ namespace linklist {
     bool ListDelete(LinkList *&L, int i, ElemType &e);
 
     bool GetElem_Bottom_K(LinkList *L, int k, ElemType &e);
-}
+}// namespace linklist
 
-#endif //TEST_LINKLIST_H
-
-
+#endif//TEST_LINKLIST_H
