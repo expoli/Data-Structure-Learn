@@ -6,14 +6,14 @@
 #include "../head/pv.h"
 
 int v(int semid) {
-//    https://sites.uclouvain.be/SystInfo/usr/include/sys/sem.h.html
-/* Structure used for argument to `semop' to describe operations.  */
-//    struct sembuf
-//    {
-//        unsigned short int sem_num;        /* semaphore number */
-//        short int sem_op;                /* semaphore operation */
-//        short int sem_flg;                /* operation flag */
-//    };
+    //    https://sites.uclouvain.be/SystInfo/usr/include/sys/sem.h.html
+    /* Structure used for argument to `semop' to describe operations.  */
+    //    struct sembuf
+    //    {
+    //        unsigned short int sem_num;        /* semaphore number */
+    //        short int sem_op;                /* semaphore operation */
+    //        short int sem_flg;                /* operation flag */
+    //    };
     struct sembuf v_buf;
 
     v_buf.sem_num = 0;

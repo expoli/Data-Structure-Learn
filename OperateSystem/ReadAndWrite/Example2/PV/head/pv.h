@@ -16,13 +16,16 @@
 #define SEMPERM 0600
 #define TRUE 1
 #define FALSE 0
+
 typedef union _semun {
-    int val;
-    struct semid_ds *buf;
-    ushort *array;
+    int val;               /* Value for SETVAL */
+    struct semid_ds *buf;  /* Buffer for IPC_STAT, IPC_SET */
+    unsigned short *array; /* Array for GETALL, SETALL */
+    struct seminfo *__buf; /* Buffer for IPC_INFO
+                                (Linux specific) */
 } semun;
 
-int initsem(key_t semkey);
+int initsem(key_t semkey, int nsems);
 int p(int semid);
 int v(int semid);
 
