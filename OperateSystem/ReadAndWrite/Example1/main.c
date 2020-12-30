@@ -5,10 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/syscall.h>//Linux system call for thread id
+#define gettid() syscall(SYS_gettid)
 #include <unistd.h>
 
 
-#define N_WRITER 3 //写者数目
+#define N_WRITER 1 //写者数目
 #define N_READER 5 //读者数目
 #define W_SLEEP  1 //控制写频率
 #define R_SLEEP  1 //控制读频率
@@ -37,10 +39,13 @@ void Read() {
 _Noreturn void *writer(void *in) {
     while (1) {
         // 尝试取得写锁
+        printf("写者进程 %ld 尝试取得写权限\n",gettid());
         pthread_mutex_lock(&writeLock);
         Write();
+        printf("写者进程 %ld 取得写权限\n",gettid());
         // 解除读写锁
         pthread_mutex_unlock(&writeLock);
+        printf("写者进程 %ld 释放写权限\n",gettid());
         sleep(W_SLEEP);
     }
     pthread_exit((void *) 0);
@@ -49,11 +54,15 @@ _Noreturn void *writer(void *in) {
 _Noreturn void *reader(void *in) {
     while (1) {
         // 读者互斥、修改读者数量
+        printf("读者进程 %ld 互斥修改人数\n",gettid());
         pthread_mutex_lock(&accessReaderCnt);
         readerCnt++;
+        printf("当前读者人数: %d\n",readerCnt);
         // 初始情况、没有读者申请读写锁
         if (readerCnt == 1) {
+            printf("读者进程 %ld 尝试获取读权限\n",gettid());
             pthread_mutex_lock(&writeLock);
+            printf("读者进程 %ld 取得读权限\n",gettid());
         }
         pthread_mutex_unlock(&accessReaderCnt);
 
@@ -82,7 +91,7 @@ int main() {
         pthread_create(&rid[i], NULL, writer, NULL);
     }
     while (1) {
-        sleep(10);
+        sleep(3);
     }
     return 0;
 }
